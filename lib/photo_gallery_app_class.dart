@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:http/http.dart';
+import 'package:ostad_assigment_3/create_image_details_screen.dart';
 import 'package:ostad_assigment_3/image_model.dart';
 
 class PhotoGallery extends StatefulWidget {
@@ -45,6 +45,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
           child: ListView.builder(
             itemCount: imageList.length,
             itemBuilder: (context, index) {
+              // final imageDetails = imageList[index];
               return buildImageView(imageList[index]);
             },
           ),
@@ -56,10 +57,17 @@ class _PhotoGalleryState extends State<PhotoGallery> {
   Widget buildImageView(ImageModel imageModel) {
     return Wrap(children: [
       ListTile(
-        leading: GestureDetector(
-            onTap: () {},
-            child: Image.network(imageModel.thumbnailUrl ?? 'Unknown')),
+        leading: Image.network(imageModel.thumbnailUrl ?? 'Unknown'),
         title: Text(imageModel.title ?? 'Unknown'),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  CreateImageDetailsScreen(imageModel: imageModel),
+            ),
+          );
+        },
       ),
     ]);
   }
